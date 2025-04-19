@@ -23,7 +23,7 @@ WORKDIR /root/
 COPY --from=builder /app/bin/server .
 
 # 复制配置文件
-COPY config.yaml ./config.yaml
+COPY config.yml ./config.yml
 
 # 暴露端口
 EXPOSE 8081
