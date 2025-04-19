@@ -1,9 +1,9 @@
  mongo:
-  host: 127.0.0.1
+  host: mongodb
   port: 27017
-  user: awsling
+  user: admin
   password: 123456
-  database: smartcode
+  database: db
 
  mcp:
    name: mongo-mcp-server
