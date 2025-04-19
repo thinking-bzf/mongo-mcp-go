@@ -1,0 +1,13 @@
+ mongo:
+  host: 127.0.0.1
+  port: 27017
+  user: awsling
+  password: 123456
+  database: smartcode
+
+ mcp:
+   name: mongo-mcp-server
+   version: 1.0.0
+   base_url: localhost:8081
+   address: ":8081"
+   sse: true
