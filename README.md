@@ -82,5 +82,3 @@ Use in DeepChat
 - [MongoDB Official Documentation](https://www.mongodb.com/zh-cn/docs/languages/go/)
 - [mcp-go](https://github.com/mark3labs/mcp-go)
 - [mongo-mcp](https://github.com/QuantGeekDev/mongo-mcp)
-- 
-```
