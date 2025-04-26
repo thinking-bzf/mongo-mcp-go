@@ -14,8 +14,8 @@ type CountDocumentRequest struct {
 }
 
 type InsertDocumentRequest struct {
-	Collection string                 `mapstructure:"collection" json:"collection"`
-	Document   map[string]interface{} `mapstructure:"document" json:"document"`
+	Collection string `mapstructure:"collection" json:"collection"`
+	Document   string `mapstructure:"document" json:"document"`
 }
 
 type DeleteDocumentRequest struct {

@@ -155,6 +155,7 @@ func (c documentTool) InsertOne() (tool mcp.Tool, handler server.ToolHandlerFunc
 	// handler
 	handler = func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		var req model.InsertDocumentRequest
+
 		err := mapstructure.Decode(request.Params.Arguments, &req)
 		if err != nil {
 			return mcp.NewToolResultText("Parse request failed"), err
@@ -162,7 +163,13 @@ func (c documentTool) InsertOne() (tool mcp.Tool, handler server.ToolHandlerFunc
 
 		log.Printf(fmt.Sprintf("Insert document in collection: %s, document: %s", req.Collection, req.Document))
 
-		res, err := client.DB.Collection(req.Collection).InsertOne(ctx, req.Document)
+		// Convert the document string to a BSON document
+		var document bson.M
+		err = bson.UnmarshalExtJSON([]byte(req.Document), true, &document)
+		if err != nil {
+			return mcp.NewToolResultText("Parse document failed"), err
+		}
+		res, err := client.DB.Collection(req.Collection).InsertOne(ctx, document)
 		if err != nil {
 			return mcp.NewToolResultText(err.Error()), err
 		}
