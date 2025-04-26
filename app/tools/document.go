@@ -146,7 +146,7 @@ func (c documentTool) InsertOne() (tool mcp.Tool, handler server.ToolHandlerFunc
 			mcp.Required(),
 			mcp.Description("Collection name to insert"),
 		),
-		mcp.WithObject("document",
+		mcp.WithString("document",
 			mcp.Required(),
 			mcp.Description("document to insert"),
 			mcp.DefaultString("{}"),
