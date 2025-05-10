@@ -18,6 +18,8 @@ func AddTools(s *server.MCPServer) {
 	indexTool := tools.NewIndexTool()
 	AddIndexTools(s, indexTool)
 
+	idGenerateTool := tools.NewIdGenerateTool()
+	AddIdGenerateTools(s, idGenerateTool)
 }
 
 // AddCollectionTools adds collection tools to the MCP server
@@ -39,4 +41,8 @@ func AddIndexTools(s *server.MCPServer, indexTool tools.IndexTool) {
 	s.AddTool(indexTool.CreateIndex())
 	s.AddTool(indexTool.ListIndexes())
 	s.AddTool(indexTool.DropIndex())
+}
+
+func AddIdGenerateTools(s *server.MCPServer, idGenerateTool tools.IdGenerateTool) {
+	s.AddTool(idGenerateTool.Generate())
 }

@@ -49,8 +49,8 @@ func (c documentTool) Find() (tool mcp.Tool, handler server.ToolHandlerFunc) {
 		),
 		mcp.WithNumber("limit",
 			mcp.Description("Limit the number of documents to return"),
-			mcp.DefaultNumber(10),
-			mcp.Min(1),
+			mcp.DefaultNumber(0),
+			mcp.Min(0),
 			mcp.Max(1000),
 		),
 		mcp.WithObject("projection",
@@ -83,12 +83,14 @@ func (c documentTool) Find() (tool mcp.Tool, handler server.ToolHandlerFunc) {
 			return mcp.NewToolResultText(err.Error()), err
 		}
 		if len(documents) == 0 {
+			log.Println("No documents found")
 			return mcp.NewToolResultText("No documents found"), nil
 		}
 		var result string
 		for _, doc := range documents {
 			result += fmt.Sprintf("%v\n", doc)
 		}
+		log.Println(result)
 		return mcp.NewToolResultText(result), nil
 	}
 	return
@@ -124,13 +126,11 @@ func (c documentTool) Count() (tool mcp.Tool, handler server.ToolHandlerFunc) {
 
 		log.Printf(fmt.Sprintf("Count document in collection: %s, filter: %s", req.Collection, req.Filter))
 
-		count, err := client.DB.Collection(req.Collection).CountDocuments(ctx, req.Filter, &options.CountOptions{
-			Limit: &req.Limit,
-		})
+		count, err := client.DB.Collection(req.Collection).CountDocuments(ctx, req.Filter)
 		if err != nil {
 			return mcp.NewToolResultText(err.Error()), err
 		}
-
+		log.Printf(fmt.Sprintf("Count documents success, count: %d", count))
 		return mcp.NewToolResultText(fmt.Sprintf("Count documents success, count: %d", count)), nil
 	}
 	return
@@ -245,6 +245,7 @@ func (c documentTool) UpdateOne() (tool mcp.Tool, handler server.ToolHandlerFunc
 		if err != nil {
 			return mcp.NewToolResultText("Parse request failed"), err
 		}
+		fmt.Println(req)
 
 		log.Printf(fmt.Sprintf("Update document in collection: %s, filter: %s", req.Collection, req.Filter))
 
